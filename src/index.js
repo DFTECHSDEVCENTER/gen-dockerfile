@@ -10,7 +10,7 @@ var lang = null;
 let inputConfig =     {
   "from": {},
   "copy":  [],
-  "run":{}
+  "run": ""
 }
 
 function buildOS() {
@@ -35,15 +35,19 @@ function buildOS() {
           switch(osType)
           {
               case 'Ubuntu Based' :
+              inputConfig.run = "sudo apt install -y --no-install-recommends ";
               inputConfig.from = { "baseImage" : "dftechs/ubuntu-dev"};
               break;
               case 'Debian Based' :
+              inputConfig.run = "sudo apt-get install -y --no-install-recommends ";
               inputConfig.from = { "baseImage" : "dftechs/debian-dev" };
               break;
               case 'Clear Linux Based' :
+              inputConfig.run = "sudo swupd bundle-add ";
               inputConfig.from = { "baseImage" : "dftechs/clearlinux-dev"};
               break;
               case 'Alpine Based' :
+              inputConfig.run = "sudo apk add --update --no-cache ";
               inputConfig.from = { "baseImage" : "dftechs/alpine-dev" };
               break;
           }
@@ -56,6 +60,20 @@ function buildOS() {
 
 function buildLang() {
   let depencyDescriptor;
+  let packagesMap = {
+    "Python3": {
+      "dftechs/ubuntu-dev": "python3 python3-pip",
+      "dftechs/debian-dev": "python3 python3-pip",
+      "dftechs/clearlinux-dev": "python3-basic",
+      "dftechs/alpine-dev": "python3 && ln -sf python3 /usr/bin/python && python3 -m ensurepip"
+    },
+    "Nodejs": {
+      "dftechs/ubuntu-dev": "nodejs npm",
+      "dftechs/debian-dev": "nodejs npm",
+      "dftechs/clearlinux-dev": "nodejs-basic",
+      "dftechs/alpine-dev": "nodejs npm"
+    }
+  };
   inquirer
     .prompt([
       {
@@ -71,17 +89,18 @@ function buildLang() {
       if (answers.appType) {
           switch(answers.appType){
               case 'Nodejs' :
-                installerSc = ['npm' , 'install'];
-                depencyDescriptor = 'package.json'
+                installerSc = 'npm install';
+                depencyDescriptor = 'package.json';
                 break;
               case 'Python3' :
-                installerSc = ['pip' , 'install' , '-r',  'requirements.txt']
-                depencyDescriptor = 'requirements.txt'
+                installerSc = 'pip install -r requirements.txt';
+                depencyDescriptor = 'requirements.txt';
                 break;
           }
         console.log(installerSc);
         inputConfig.copy[depencyDescriptor] = '.' ;
-        inputConfig.run = installerSc;
+        inputConfig.run += packagesMap[answers.appType][inputConfig.from["baseImage"]];
+        inputConfig.run += ` && ${installerSc}`;
         enablePort();
       } else {
         console.log("Goodbye 👋");

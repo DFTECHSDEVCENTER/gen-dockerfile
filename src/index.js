@@ -29,7 +29,7 @@ function buildOS() {
       },
     ])
     .then((answers) => {
-      console.log(answers);
+      // console.log(answers);
       if (answers.osType) {
           const osType = answers.osType;
           switch(osType)
@@ -84,7 +84,7 @@ function buildLang() {
       },
     ])
     .then((answers) => {
-      console.log(answers);
+      //console.log(answers);
       lang = answers.appType;
       if (answers.appType) {
           switch(answers.appType){
@@ -119,7 +119,7 @@ function buildEnvPort() {
       },
     ])
     .then((answers) => {
-      console.log(answers);
+      //console.log(answers);
       if (answers.envPort) {
         inputConfig.expose = [answers.envPort];
         copySrc();
@@ -193,7 +193,7 @@ function copySrc(){
     }
   ])
   .then((answers) => {
-    console.log(answers);
+    //console.log(answers);
     if(answers.path === '.'){
       inputConfig.copy = [];
     }
@@ -203,7 +203,7 @@ function copySrc(){
 }
 
 function buildFile(){
-  console.log("Work in Progress .... 🚀");
+  //console.log("Work in Progress .... 🚀");
   generator.generate(inputConfig).then((response) => 
   {
     
@@ -212,7 +212,7 @@ function buildFile(){
         console.log('Error to create Dockerfile');
         return;
       }
-      console.log('File created successfully');
+      console.log('File created successfully 🚀');
       console.log("Goodbye 👋");
     });
   })
@@ -232,7 +232,7 @@ function buildAppName() {
       },
     ])
     .then((answers) => {
-      console.log(answers);
+      //console.log(answers);
       if (answers.appName) {
         buildOS();
       } else {
@@ -254,7 +254,7 @@ if (existingConfig) {
       },
     ])
     .then((answers) => {
-      console.log(answers);
+      //console.log(answers);
       if (answers.existing) {
         buildAppName();
       } else {

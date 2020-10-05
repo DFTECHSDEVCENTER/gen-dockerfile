@@ -1,6 +1,6 @@
 {
   "name": "@DFTECHSDEVCENTER/gen-dockerfile",
-  "version": "0.1.0-alpha",
+  "version": "0.1.0-beta",
   "description": "A Dockerfile Generator for your Applications to create docker images",
   "main": "src/index.js",
   "repository": {

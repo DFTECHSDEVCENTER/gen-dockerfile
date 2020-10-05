@@ -8,7 +8,7 @@ A Dockerfile generator to Dockerize your Applications.
 This will help you create custom docker-images or docker containers.
 
 ```yaml
-Current Version: 0.0.5-alpha
+Current Version: 0.1.0-alpha
 ```
 
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square) | ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source-150x25.png?v=103)
@@ -60,8 +60,12 @@ npm i -g gen-dockerfile
   - [x] Major bug Fixes
 - [x] Fixed Some Bugs
 - [x] Dockerfile Generation
+- [x] Added feature for package Installation
+  - [x] Installation of Nodejs packages
+  - [x] Installation of Python packages
 - [ ] All bugs fixed (Really .....)
-- [ ] Project Finish and could be used in Production (NO ..... Not Now)
+- [x] Could be used in Production
+- [ ] Project Finish  (NO ..... Not Now)
 
 ## What we are going to Do
 

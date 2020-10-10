@@ -7,6 +7,7 @@ const existingConfig = fs.existsSync("Dockerfile");
 const generator = require('dockerfile-generator')
 var installerSc = null;
 var lang = null;
+var framework = null;
 let inputConfig =     {
   "from": {},
   "working_dir": "",
@@ -102,10 +103,50 @@ function buildLang() {
         inputConfig.copy[depencyDescriptor] = '.' ;
         inputConfig.run += packagesMap[answers.appType][inputConfig.from["baseImage"]];
         inputConfig.run += ` && ${installerSc}`;
-        enablePort();
+        useFramework();
       } else {
         console.log("Goodbye 👋");
       }
+    });
+}
+
+function useFramework() {
+  inquirer
+    .prompt([
+      {
+        type: "confirm",
+        name: "useFramework",
+        message: "Are you using any predefined framework ?",
+      },
+    ])
+    .then((answers) => {
+      if (answers.useFramework) {
+        buildFramework();
+      } else {
+        enablePort();
+      }
+    });
+}
+
+function buildFramework() {
+  let frameworkChoices = {
+    "Python3": ["Django", "Flask", "Other"],
+    "Nodejs": ["Express", "Hexo", "Hugo", "Other"]
+  };
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "appFramework",
+        message: "What framework is it ?",
+        choices: frameworkChoices[lang],
+      },
+    ])
+    .then((answers) => {
+      if (answers.appFramework) {
+        framework = answers.appFramework;
+      }
+      enablePort();
     });
 }
 

@@ -9,6 +9,7 @@ var installerSc = null;
 var lang = null;
 let inputConfig =     {
   "from": {},
+  "working_dir": "",
   "copy":  [],
   "run": ""
 }
@@ -234,6 +235,7 @@ function buildAppName() {
     .then((answers) => {
       //console.log(answers);
       if (answers.appName) {
+        inputConfig.working_dir = answers.appName;
         buildOS();
       } else {
         console.log("Goodbye 👋");

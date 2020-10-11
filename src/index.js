@@ -31,28 +31,30 @@ function buildOS() {
       },
     ])
     .then((answers) => {
-      // console.log(answers);
       if (answers.osType) {
-          const osType = answers.osType;
-          switch(osType)
-          {
-              case 'Ubuntu Based' :
+        const osType = answers.osType;
+        switch(osType) {
+            case 'Ubuntu Based' :
               inputConfig.run = "sudo apt install -y --no-install-recommends ";
               inputConfig.from = { "baseImage" : "dftechs/ubuntu-dev"};
               break;
-              case 'Debian Based' :
+
+            case 'Debian Based' :
               inputConfig.run = "sudo apt-get install -y --no-install-recommends ";
               inputConfig.from = { "baseImage" : "dftechs/debian-dev" };
               break;
-              case 'Clear Linux Based' :
+
+            case 'Clear Linux Based' :
               inputConfig.run = "sudo swupd bundle-add ";
               inputConfig.from = { "baseImage" : "dftechs/clearlinux-dev"};
               break;
-              case 'Alpine Based' :
+
+            case 'Alpine Based' :
               inputConfig.run = "sudo apk add --update --no-cache ";
               inputConfig.from = { "baseImage" : "dftechs/alpine-dev" };
               break;
-          }
+        }
+
         buildLang();
       } else {
         console.log("Goodbye 👋");
@@ -63,6 +65,12 @@ function buildOS() {
 function buildLang() {
   let depencyDescriptor;
   let packagesMap = {
+    "Ruby": {
+      "dftechs/ubuntu-dev": "ruby",
+      "dftechs/debian-dev": "ruby",
+      "dftechs/clearlinux-dev": "ruby-basic",
+      "dftechs/alpine-dev": "ruby"
+    },
     "Python3": {
       "dftechs/ubuntu-dev": "python3 python3-pip",
       "dftechs/debian-dev": "python3 python3-pip",
@@ -82,25 +90,35 @@ function buildLang() {
         type: "list",
         name: "appType",
         message: "What is Project's Application Type ?",
-        choices: ["Nodejs", "Python3"],
+        choices: ["Nodejs", "Python3", "Ruby"],
       },
     ])
     .then((answers) => {
-      //console.log(answers);
       lang = answers.appType;
       if (answers.appType) {
-          switch(answers.appType){
-              case 'Nodejs' :
-                installerSc = 'npm install';
-                depencyDescriptor = 'package.json';
-                break;
-              case 'Python3' :
-                installerSc = 'pip install -r requirements.txt';
-                depencyDescriptor = 'requirements.txt';
-                break;
-          }
+        switch(answers.appType) {
+            case 'Nodejs' :
+              installerSc = 'npm install';
+              depencyDescriptor = ['package.json'];
+              break;
+
+            case 'Python3' :
+              installerSc = 'pip install -r requirements.txt';
+              depencyDescriptor = ['requirements.txt'];
+              break;
+
+            case 'Ruby':
+              installerSc = 'gem install bunlder && bundle install';
+              depencyDescriptor = ['Gemfile', 'Gemfile.lock'];
+              break;
+        }
+
         console.log(installerSc);
-        inputConfig.copy[depencyDescriptor] = '.' ;
+
+        for (let descriptor of depencyDescriptor) {
+          inputConfig.copy[descriptor] = '.' ;
+        }
+
         inputConfig.run += packagesMap[answers.appType][inputConfig.from["baseImage"]];
         inputConfig.run += ` && ${installerSc}`;
         useFramework();
@@ -131,8 +149,10 @@ function useFramework() {
 function buildFramework() {
   let frameworkChoices = {
     "Python3": ["Django", "Flask", "Other"],
-    "Nodejs": ["Express", "Hexo", "Hugo", "Other"]
+    "Nodejs": ["Express", "Hexo", "Hugo", "Other"],
+    "Ruby": ["Rails", "Sinatra", "Other"]
   };
+
   inquirer
     .prompt([
       {
@@ -146,6 +166,7 @@ function buildFramework() {
       if (answers.appFramework) {
         framework = answers.appFramework;
       }
+
       enablePort();
     });
 }
@@ -157,11 +178,10 @@ function buildEnvPort() {
         type: "text",
         name: "envPort",
         message: "What PORT do you want to expose ?",
-        default: `${lang === 'Nodejs' ? 3000 : 5000}`,
+        default: `${lang === 'Nodejs' ? 3000 : lang === 'Python3' ? 5000 : 3030}`,
       },
     ])
     .then((answers) => {
-      //console.log(answers);
       if (answers.envPort) {
         inputConfig.expose = [answers.envPort];
         copySrc();
@@ -179,22 +199,27 @@ function finalCMD() {
         type: "text",
         name: "entryPoint",
         message: "Which file initiates your app ?",
-        default: `${lang === 'Nodejs' ? 'index.js' : 'main.py'}`,
+        default: `${lang === 'Nodejs' ? 'index.js' : lang === "Python3" ? 'main.py' : 'main.rb'}`,
       },
     ])
     .then((answers) => {
       var stFile = answers.entryPoint;
-          switch(lang){
-              case 'Nodejs':
-              starter = "node";
-              break;
-              case 'Python3':
-              starter = "python3";
-              break;
-          }
-        inputConfig.cmd = [starter , stFile ];
-    console.log(answers);
-    buildFile();
+      switch(lang){
+        case 'Nodejs':
+          starter = "node";
+          break;
+
+        case 'Python3':
+          starter = "python3";
+          break;
+
+        case 'Ruby':
+          starter = "ruby";
+          break;
+      }
+      inputConfig.cmd = [starter , stFile ];
+      console.log(answers);
+      buildFile();
     });
 }
 
@@ -235,7 +260,6 @@ function copySrc(){
     }
   ])
   .then((answers) => {
-    //console.log(answers);
     if(answers.path === '.'){
       inputConfig.copy = [];
     }
@@ -245,10 +269,9 @@ function copySrc(){
 }
 
 function buildFile(){
-  //console.log("Work in Progress .... 🚀");
-  generator.generate(inputConfig).then((response) => 
+  generator.generate(inputConfig).then((response) =>
   {
-    
+
     fs.writeFile(`${process.cwd()}/Dockerfile`,response, (err) => {
       if(err) {
         console.log('Error to create Dockerfile');
@@ -259,7 +282,7 @@ function buildFile(){
     });
   })
   .catch(err => console.log("Error to generate Dockerfile"));
-  
+
 }
 
 
@@ -274,7 +297,6 @@ function buildAppName() {
       },
     ])
     .then((answers) => {
-      //console.log(answers);
       if (answers.appName) {
         inputConfig.working_dir = answers.appName;
         buildOS();
@@ -297,7 +319,6 @@ if (existingConfig) {
       },
     ])
     .then((answers) => {
-      //console.log(answers);
       if (answers.existing) {
         buildAppName();
       } else {

@@ -82,6 +82,12 @@ function buildLang() {
       "dftechs/debian-dev": "nodejs npm",
       "dftechs/clearlinux-dev": "nodejs-basic",
       "dftechs/alpine-dev": "nodejs npm"
+    },
+    "PHP": {
+      "dftechs/ubuntu-dev": "php",
+      "dftechs/debian-dev": "php",
+      "dftechs/clearlinux-dev": "php-basic",
+      "dftechs/alpine-dev": "php"
     }
   };
   inquirer
@@ -90,7 +96,7 @@ function buildLang() {
         type: "list",
         name: "appType",
         message: "What is Project's Application Type ?",
-        choices: ["Nodejs", "Python3", "Ruby"],
+        choices: ["Nodejs", "Python3", "Ruby", "PHP"],
       },
     ])
     .then((answers) => {
@@ -108,8 +114,13 @@ function buildLang() {
               break;
 
             case 'Ruby':
-              installerSc = 'gem install bunlder && bundle install';
+              installerSc = 'gem install bundler && bundle install';
               depencyDescriptor = ['Gemfile', 'Gemfile.lock'];
+              break;
+
+            case 'PHP':
+              installerSc = null;
+              depencyDescriptor = [];
               break;
         }
 
@@ -119,8 +130,12 @@ function buildLang() {
           inputConfig.copy[descriptor] = '.' ;
         }
 
-        inputConfig.run += packagesMap[answers.appType][inputConfig.from["baseImage"]];
-        inputConfig.run += ` && ${installerSc}`;
+        if (packagesMap[answers.appType] && packagesMap[answers.appType][inputConfig.from["baseImage"]]) {
+          inputConfig.run += packagesMap[answers.appType][inputConfig.from["baseImage"]];
+        }
+        if (installerSc) {
+          inputConfig.run += ` && ${installerSc}`;
+        }
         useFramework();
       } else {
         console.log("Goodbye 👋");
@@ -150,7 +165,8 @@ function buildFramework() {
   let frameworkChoices = {
     "Python3": ["Django", "Flask", "Other"],
     "Nodejs": ["Express", "Hexo", "Hugo", "Other"],
-    "Ruby": ["Rails", "Sinatra", "Other"]
+    "Ruby": ["Rails", "Sinatra", "Other"],
+    "PHP": ["Laravel", "CodeIgniter", "Yii", "Other"]
   };
 
   inquirer
@@ -178,7 +194,7 @@ function buildEnvPort() {
         type: "text",
         name: "envPort",
         message: "What PORT do you want to expose ?",
-        default: `${lang === 'Nodejs' ? 3000 : lang === 'Python3' ? 5000 : 3030}`,
+        default: `${lang === 'Nodejs' ? 3000 : lang === 'Python3' ? 5000 : lang === 'Ruby' ?  3030 : 8080}`,
       },
     ])
     .then((answers) => {
@@ -199,7 +215,7 @@ function finalCMD() {
         type: "text",
         name: "entryPoint",
         message: "Which file initiates your app ?",
-        default: `${lang === 'Nodejs' ? 'index.js' : lang === "Python3" ? 'main.py' : 'main.rb'}`,
+        default: `${lang === 'Nodejs' ? 'index.js' : lang === "Python3" ? 'main.py' : lang === "Ruby" ? 'main.rb' : 'index.php'}`,
       },
     ])
     .then((answers) => {
@@ -216,6 +232,10 @@ function finalCMD() {
         case 'Ruby':
           starter = "ruby";
           break;
+
+        case 'PHP':
+          starter = `php -S localhost:${inputConfig.expose[0]}`;
+          break;
       }
       inputConfig.cmd = [starter , stFile ];
       console.log(answers);
@@ -224,7 +244,10 @@ function finalCMD() {
 }
 
 function enablePort() {
-  inquirer
+  if (lang === 'PHP') {
+    buildEnvPort();
+  } else {
+    inquirer
     .prompt([
       {
         type: "confirm",
@@ -240,6 +263,7 @@ function enablePort() {
         copySrc();
       }
     });
+  }
 }
 
 

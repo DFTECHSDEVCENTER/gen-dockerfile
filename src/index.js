@@ -4,16 +4,11 @@ const fs = require("fs");
 var inquirer = require("inquirer");
 const path = require("path");
 const existingConfig = fs.existsSync("Dockerfile");
-const generator = require('dockerfile-generator')
+const generator = require("dockerfile-generator");
 var installerSc = null;
 var lang = null;
 var framework = null;
-let inputConfig =     {
-  "from": {},
-  "working_dir": "",
-  "copy":  [],
-  "run": ""
-}
+let inputConfig = { from: {}, working_dir: "", copy: [], run: "" };
 
 function buildOS() {
   inquirer
@@ -33,26 +28,27 @@ function buildOS() {
     .then((answers) => {
       if (answers.osType) {
         const osType = answers.osType;
-        switch(osType) {
-            case 'Ubuntu Based' :
-              inputConfig.run = "sudo apt install -y --no-install-recommends ";
-              inputConfig.from = { "baseImage" : "dftechs/ubuntu-dev"};
-              break;
+        switch (osType) {
+          case "Ubuntu Based":
+            inputConfig.run = "sudo apt install -y --no-install-recommends ";
+            inputConfig.from = { baseImage: "dftechs/ubuntu-dev" };
+            break;
 
-            case 'Debian Based' :
-              inputConfig.run = "sudo apt-get install -y --no-install-recommends ";
-              inputConfig.from = { "baseImage" : "dftechs/debian-dev" };
-              break;
+          case "Debian Based":
+            inputConfig.run =
+              "sudo apt-get install -y --no-install-recommends ";
+            inputConfig.from = { baseImage: "dftechs/debian-dev" };
+            break;
 
-            case 'Clear Linux Based' :
-              inputConfig.run = "sudo swupd bundle-add ";
-              inputConfig.from = { "baseImage" : "dftechs/clearlinux-dev"};
-              break;
+          case "Clear Linux Based":
+            inputConfig.run = "sudo swupd bundle-add ";
+            inputConfig.from = { baseImage: "dftechs/clearlinux-dev" };
+            break;
 
-            case 'Alpine Based' :
-              inputConfig.run = "sudo apk add --update --no-cache ";
-              inputConfig.from = { "baseImage" : "dftechs/alpine-dev" };
-              break;
+          case "Alpine Based":
+            inputConfig.run = "sudo apk add --update --no-cache ";
+            inputConfig.from = { baseImage: "dftechs/alpine-dev" };
+            break;
         }
 
         buildLang();
@@ -65,30 +61,31 @@ function buildOS() {
 function buildLang() {
   let depencyDescriptor;
   let packagesMap = {
-    "Ruby": {
+    Ruby: {
       "dftechs/ubuntu-dev": "ruby",
       "dftechs/debian-dev": "ruby",
       "dftechs/clearlinux-dev": "ruby-basic",
-      "dftechs/alpine-dev": "ruby"
+      "dftechs/alpine-dev": "ruby",
     },
-    "Python3": {
+    Python3: {
       "dftechs/ubuntu-dev": "python3 python3-pip",
       "dftechs/debian-dev": "python3 python3-pip",
       "dftechs/clearlinux-dev": "python3-basic",
-      "dftechs/alpine-dev": "python3 && ln -sf python3 /usr/bin/python && python3 -m ensurepip"
+      "dftechs/alpine-dev":
+        "python3 && ln -sf python3 /usr/bin/python && python3 -m ensurepip",
     },
-    "Nodejs": {
+    Nodejs: {
       "dftechs/ubuntu-dev": "nodejs npm",
       "dftechs/debian-dev": "nodejs npm",
       "dftechs/clearlinux-dev": "nodejs-basic",
-      "dftechs/alpine-dev": "nodejs npm"
+      "dftechs/alpine-dev": "nodejs npm",
     },
-    "PHP": {
+    PHP: {
       "dftechs/ubuntu-dev": "php",
       "dftechs/debian-dev": "php",
       "dftechs/clearlinux-dev": "php-basic",
-      "dftechs/alpine-dev": "php"
-    }
+      "dftechs/alpine-dev": "php",
+    },
   };
   inquirer
     .prompt([
@@ -102,36 +99,40 @@ function buildLang() {
     .then((answers) => {
       lang = answers.appType;
       if (answers.appType) {
-        switch(answers.appType) {
-            case 'Nodejs' :
-              installerSc = 'npm install';
-              depencyDescriptor = ['package.json'];
-              break;
+        switch (answers.appType) {
+          case "Nodejs":
+            installerSc = "npm install";
+            depencyDescriptor = ["package.json"];
+            break;
 
-            case 'Python3' :
-              installerSc = 'pip install -r requirements.txt';
-              depencyDescriptor = ['requirements.txt'];
-              break;
+          case "Python3":
+            installerSc = "pip install -r requirements.txt";
+            depencyDescriptor = ["requirements.txt"];
+            break;
 
-            case 'Ruby':
-              installerSc = 'gem install bundler && bundle install';
-              depencyDescriptor = ['Gemfile', 'Gemfile.lock'];
-              break;
+          case "Ruby":
+            installerSc = "gem install bundler && bundle install";
+            depencyDescriptor = ["Gemfile", "Gemfile.lock"];
+            break;
 
-            case 'PHP':
-              installerSc = null;
-              depencyDescriptor = [];
-              break;
+          case "PHP":
+            installerSc = null;
+            depencyDescriptor = [];
+            break;
         }
 
         console.log(installerSc);
 
         for (let descriptor of depencyDescriptor) {
-          inputConfig.copy[descriptor] = '.' ;
+          inputConfig.copy[descriptor] = ".";
         }
 
-        if (packagesMap[answers.appType] && packagesMap[answers.appType][inputConfig.from["baseImage"]]) {
-          inputConfig.run += packagesMap[answers.appType][inputConfig.from["baseImage"]];
+        if (
+          packagesMap[answers.appType] &&
+          packagesMap[answers.appType][inputConfig.from["baseImage"]]
+        ) {
+          inputConfig.run +=
+            packagesMap[answers.appType][inputConfig.from["baseImage"]];
         }
         if (installerSc) {
           inputConfig.run += ` && ${installerSc}`;
@@ -163,10 +164,10 @@ function useFramework() {
 
 function buildFramework() {
   let frameworkChoices = {
-    "Python3": ["Django", "Flask", "Other"],
-    "Nodejs": ["Express", "Hexo", "Hugo", "Other"],
-    "Ruby": ["Rails", "Sinatra", "Other"],
-    "PHP": ["Laravel", "CodeIgniter", "Yii", "Other"]
+    Python3: ["Django", "Flask", "Other"],
+    Nodejs: ["Express", "Hexo", "Hugo", "Other"],
+    Ruby: ["Rails", "Sinatra", "Other"],
+    PHP: ["Laravel", "CodeIgniter", "Yii", "Other"],
   };
 
   inquirer
@@ -194,7 +195,15 @@ function buildEnvPort() {
         type: "text",
         name: "envPort",
         message: "What PORT do you want to expose ?",
-        default: `${lang === 'Nodejs' ? 3000 : lang === 'Python3' ? 5000 : lang === 'Ruby' ?  3030 : 8080}`,
+        default: `${
+          lang === "Nodejs"
+            ? 3000
+            : lang === "Python3"
+            ? 5000
+            : lang === "Ruby"
+            ? 3030
+            : 8080
+        }`,
       },
     ])
     .then((answers) => {
@@ -215,100 +224,107 @@ function finalCMD() {
         type: "text",
         name: "entryPoint",
         message: "Which file initiates your app ?",
-        default: `${lang === 'Nodejs' ? 'index.js' : lang === "Python3" ? 'main.py' : lang === "Ruby" ? 'main.rb' : 'index.php'}`,
+        default: `${
+          lang === "Nodejs"
+            ? "index.js"
+            : lang === "Python3"
+            ? "main.py"
+            : lang === "Ruby"
+            ? "main.rb"
+            : "index.php"
+        }`,
       },
     ])
     .then((answers) => {
       var stFile = answers.entryPoint;
-      switch(lang){
-        case 'Nodejs':
+      switch (lang) {
+        case "Nodejs":
           starter = "node";
           break;
 
-        case 'Python3':
+        case "Python3":
           starter = "python3";
           break;
 
-        case 'Ruby':
+        case "Ruby":
           starter = "ruby";
           break;
 
-        case 'PHP':
+        case "PHP":
           starter = `php -S localhost:${inputConfig.expose[0]}`;
           break;
       }
-      inputConfig.cmd = [starter , stFile ];
+      inputConfig.cmd = [starter, stFile];
       console.log(answers);
       buildFile();
     });
 }
 
 function enablePort() {
-  if (lang === 'PHP') {
+  if (lang === "PHP") {
     buildEnvPort();
   } else {
     inquirer
-    .prompt([
-      {
-        type: "confirm",
-        name: "enbPort",
-        message: "Do you want to Expose Ports ?",
-      },
-    ])
-    .then((answers) => {
-      console.log(answers);
-      if (answers.enbPort) {
-        buildEnvPort();
-      } else {
-        copySrc();
-      }
-    });
+      .prompt([
+        {
+          type: "confirm",
+          name: "enbPort",
+          message: "Do you want to Expose Ports ?",
+        },
+      ])
+      .then((answers) => {
+        console.log(answers);
+        if (answers.enbPort) {
+          buildEnvPort();
+        } else {
+          copySrc();
+        }
+      });
   }
 }
 
-
-function copySrc(){
-  inquirer.registerPrompt('fuzzypath', require('inquirer-fuzzy-path'));
-  inquirer.prompt([
-    {
-      type: 'fuzzypath',
-      name: 'path',
-      excludePath: nodePath =>  nodePath.startsWith('node_modules') || nodePath.includes('git'),
-      excludeFilter: nodePath => nodePath == '.',
-      itemType: 'directory',
-      rootPath: '.',
-      message: 'select a source directory of your component:',
-      default: `.`,
-      suggestOnly: false,
-      depthLimit: 0,
-    }
-  ])
-  .then((answers) => {
-    if(answers.path === '.'){
-      inputConfig.copy = [];
-    }
-    inputConfig.copy[answers.path] = '.';
-    finalCMD();
-  })
-}
-
-function buildFile(){
-  generator.generate(inputConfig).then((response) =>
-  {
-
-    fs.writeFile(`${process.cwd()}/Dockerfile`,response, (err) => {
-      if(err) {
-        console.log('Error to create Dockerfile');
-        return;
+function copySrc() {
+  inquirer.registerPrompt("fuzzypath", require("inquirer-fuzzy-path"));
+  inquirer
+    .prompt([
+      {
+        type: "fuzzypath",
+        name: "path",
+        excludePath: (nodePath) =>
+          nodePath.startsWith("node_modules") || nodePath.includes("git"),
+        excludeFilter: (nodePath) => nodePath == ".",
+        itemType: "directory",
+        rootPath: ".",
+        message: "select a source directory of your component:",
+        default: `.`,
+        suggestOnly: false,
+        depthLimit: 0,
+      },
+    ])
+    .then((answers) => {
+      if (answers.path === ".") {
+        inputConfig.copy = [];
       }
-      console.log('File created successfully 🚀');
-      console.log("Goodbye 👋");
+      inputConfig.copy[answers.path] = ".";
+      finalCMD();
     });
-  })
-  .catch(err => console.log("Error to generate Dockerfile"));
-
 }
 
+function buildFile() {
+  generator
+    .generate(inputConfig)
+    .then((response) => {
+      fs.writeFile(`${process.cwd()}/Dockerfile`, response, (err) => {
+        if (err) {
+          console.log("Error to create Dockerfile");
+          return;
+        }
+        console.log("File created successfully 🚀");
+        console.log("Goodbye 👋");
+      });
+    })
+    .catch((err) => console.log("Error to generate Dockerfile"));
+}
 
 function buildAppName() {
   inquirer

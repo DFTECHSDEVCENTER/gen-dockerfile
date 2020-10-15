@@ -8,7 +8,7 @@ A Dockerfile generator to Dockerize your Applications.
 This will help you create custom docker-images or docker containers.
 
 ```yaml
-Current Version: 0.2.5
+Current Version: 0.3.0
 ```
 
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square) | ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source-150x25.png?v=103)

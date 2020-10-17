@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "raulsoledispa",
+      "name": "Raul Soledispa",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/11690138?v=4",
+      "profile": "https://github.com/raulsoledispa",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "gen-dockerfile",
+  "projectOwner": "DFTECHSDEVCENTER",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}

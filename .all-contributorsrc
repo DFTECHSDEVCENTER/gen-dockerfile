@@ -14,6 +14,51 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "yohanesgultom",
+      "name": "Yohanes Gultom",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1680876?v=4",
+      "profile": "https://yohanes.gultom.id/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "kaliDFDev",
+      "name": "Kali Vector",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/53594347?v=4",
+      "profile": "https://kalidfdev.dfcommunity.win/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "yrahul3910",
+      "name": "Rahul Yedida",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8930954?v=4",
+      "profile": "https://ryedida.me/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Hyftar",
+      "name": "Simon Landry",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10182579?v=4",
+      "profile": "https://github.com/Hyftar",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "BRAVO68WEB",
+      "name": "Jyotirmoy Bandyopadhyaya [Bravo68]",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/41448663?v=4",
+      "profile": "https://bravo68web.dfcommunity.win/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -21,5 +66,6 @@
   "projectOwner": "DFTECHSDEVCENTER",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "none"
 }

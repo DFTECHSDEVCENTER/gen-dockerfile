@@ -1,6 +1,6 @@
 {
   "name": "gen-dockerfile",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A Dockerfile Generator for your Applications to create docker images",
   "main": "src/index.js",
   "repository": {
@@ -26,6 +26,7 @@
     "gen-dockerfile": "./src/index.js"
   },
   "devDependencies": {
+    "all-contributors-cli": "^6.19.0",
     "eslint": "^7.9.0",
     "nodemon": "^2.0.4"
   },

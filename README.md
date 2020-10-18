@@ -1,6 +1,6 @@
 # gen-dockerfile
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ![logo](https://raw.githubusercontent.com/DFCommunity/img-stack/master/Adobe_Post_20200912_0004510.9314596673956063.png)
@@ -106,12 +106,18 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/raulsoledispa"><img src="https://avatars0.githubusercontent.com/u/11690138?v=4" width="100px;" alt=""/><br /><sub><b>Raul Soledispa</b></sub></a><br /><a href="https://github.com/DFTECHSDEVCENTER/gen-dockerfile/commits?author=raulsoledispa" title="Code">💻</a> <a href="https://github.com/DFTECHSDEVCENTER/gen-dockerfile/commits?author=raulsoledispa" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/raulsoledispa"><img src="https://avatars0.githubusercontent.com/u/11690138?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Raul Soledispa</b></sub></a><br /><a href="https://github.com/DFTECHSDEVCENTER/gen-dockerfile/commits?author=raulsoledispa" title="Code">💻</a> <a href="https://github.com/DFTECHSDEVCENTER/gen-dockerfile/commits?author=raulsoledispa" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://yohanes.gultom.id/"><img src="https://avatars3.githubusercontent.com/u/1680876?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Yohanes Gultom</b></sub></a><br /><a href="https://github.com/DFTECHSDEVCENTER/gen-dockerfile/commits?author=yohanesgultom" title="Code">💻</a></td>
+    <td align="center"><a href="https://kalidfdev.dfcommunity.win/"><img src="https://avatars3.githubusercontent.com/u/53594347?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kali Vector</b></sub></a><br /><a href="https://github.com/DFTECHSDEVCENTER/gen-dockerfile/issues?q=author%3AkaliDFDev" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://ryedida.me/"><img src="https://avatars1.githubusercontent.com/u/8930954?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Rahul Yedida</b></sub></a><br /><a href="https://github.com/DFTECHSDEVCENTER/gen-dockerfile/commits?author=yrahul3910" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Hyftar"><img src="https://avatars2.githubusercontent.com/u/10182579?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Simon Landry</b></sub></a><br /><a href="https://github.com/DFTECHSDEVCENTER/gen-dockerfile/commits?author=Hyftar" title="Code">💻</a></td>
+    <td align="center"><a href="https://bravo68web.dfcommunity.win/"><img src="https://avatars3.githubusercontent.com/u/41448663?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jyotirmoy Bandyopadhyaya [Bravo68]</b></sub></a><br /><a href="https://github.com/DFTECHSDEVCENTER/gen-dockerfile/commits?author=BRAVO68WEB" title="Code">💻</a></td>
   </tr>
 </table>
 
-<!-- markdownlint-enable -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

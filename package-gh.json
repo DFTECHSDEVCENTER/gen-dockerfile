@@ -1,16 +1,16 @@
 {
-  "name": "@DFTECHSDEVCENTER/gen-dockerfile",
-  "version": "0.3.0",
+  "name": "gen-dockerfile",
+  "version": "0.3.1",
   "description": "A Dockerfile Generator for your Applications to create docker images",
   "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DFTECHSDEVCENTER/gen-dockerfile.git"
   },
-  "keywords": ["gen-dockerfile", "docker", "generator", "dftechs"],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
+  "keywords": ["gen-dockerfile", "docker", "generator", "dftechs"],
   "author": "BRAVO68WEB",
   "license": "MIT",
   "bugs": {
@@ -21,6 +21,7 @@
     "gen-dockerfile": "./src/index.js"
   },
   "devDependencies": {
+    "all-contributors-cli": "^6.19.0",
     "eslint": "^7.9.0",
     "nodemon": "^2.0.4"
   },

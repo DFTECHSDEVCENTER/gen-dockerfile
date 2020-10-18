@@ -1,6 +1,9 @@
 # gen-dockerfile
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ![logo](https://raw.githubusercontent.com/DFCommunity/img-stack/master/Adobe_Post_20200912_0004510.9314596673956063.png)

@@ -10,7 +10,12 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "keywords": ["gen-dockerfile", "docker", "generator", "dftechs"],
+  "keywords": [
+    "gen-dockerfile",
+    "docker",
+    "generator",
+    "dftechs"
+  ],
   "author": "BRAVO68WEB",
   "license": "MIT",
   "bugs": {

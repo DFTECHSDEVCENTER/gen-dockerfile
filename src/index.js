@@ -35,8 +35,7 @@ function buildOS() {
             break;
 
           case "Debian Based":
-            inputConfig.run =
-              "apt-get install -y --no-install-recommends ";
+            inputConfig.run = "apt-get install -y --no-install-recommends ";
             inputConfig.from = { baseImage: "dftechs/debian-dev" };
             break;
 

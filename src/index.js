@@ -30,13 +30,13 @@ function buildOS() {
         const osType = answers.osType;
         switch (osType) {
           case "Ubuntu Based":
-            inputConfig.run = "sudo apt install -y --no-install-recommends ";
+            inputConfig.run = "apt install -y --no-install-recommends ";
             inputConfig.from = { baseImage: "dftechs/ubuntu-dev" };
             break;
 
           case "Debian Based":
             inputConfig.run =
-              "sudo apt-get install -y --no-install-recommends ";
+              "apt-get install -y --no-install-recommends ";
             inputConfig.from = { baseImage: "dftechs/debian-dev" };
             break;
 
@@ -46,7 +46,7 @@ function buildOS() {
             break;
 
           case "Alpine Based":
-            inputConfig.run = "sudo apk add --update --no-cache ";
+            inputConfig.run = "apk add --update --no-cache ";
             inputConfig.from = { baseImage: "dftechs/alpine-dev" };
             break;
         }

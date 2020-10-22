@@ -254,7 +254,7 @@ function finalCMD() {
           break;
       }
       inputConfig.cmd = [starter, stFile];
-      //console.log(answers);
+      // console.log(answers);
       buildFile();
     });
 }
@@ -272,7 +272,7 @@ function enablePort() {
         },
       ])
       .then((answers) => {
-        //console.log(answers);
+        // console.log(answers);
         if (answers.enbPort) {
           buildEnvPort();
         } else {
@@ -319,7 +319,7 @@ function buildFile() {
           return;
         }
         console.log("File created successfully 🚀");
-        //console.log("Goodbye 👋");
+        // console.log("Goodbye 👋");
       });
     })
     .catch((err) => console.log("Error to generate Dockerfile"));

@@ -30,13 +30,12 @@ function buildOS() {
         const osType = answers.osType;
         switch (osType) {
           case "Ubuntu Based":
-            inputConfig.run = "sudo apt install -y --no-install-recommends ";
+            inputConfig.run = "apt install -y --no-install-recommends ";
             inputConfig.from = { baseImage: "dftechs/ubuntu-dev" };
             break;
 
           case "Debian Based":
-            inputConfig.run =
-              "sudo apt-get install -y --no-install-recommends ";
+            inputConfig.run = "apt-get install -y --no-install-recommends ";
             inputConfig.from = { baseImage: "dftechs/debian-dev" };
             break;
 
@@ -46,7 +45,7 @@ function buildOS() {
             break;
 
           case "Alpine Based":
-            inputConfig.run = "sudo apk add --update --no-cache ";
+            inputConfig.run = "apk add --update --no-cache ";
             inputConfig.from = { baseImage: "dftechs/alpine-dev" };
             break;
         }
@@ -255,7 +254,7 @@ function finalCMD() {
           break;
       }
       inputConfig.cmd = [starter, stFile];
-      console.log(answers);
+      // console.log(answers);
       buildFile();
     });
 }
@@ -273,7 +272,7 @@ function enablePort() {
         },
       ])
       .then((answers) => {
-        console.log(answers);
+        // console.log(answers);
         if (answers.enbPort) {
           buildEnvPort();
         } else {
@@ -320,7 +319,7 @@ function buildFile() {
           return;
         }
         console.log("File created successfully 🚀");
-        console.log("Goodbye 👋");
+        // console.log("Goodbye 👋");
       });
     })
     .catch((err) => console.log("Error to generate Dockerfile"));
